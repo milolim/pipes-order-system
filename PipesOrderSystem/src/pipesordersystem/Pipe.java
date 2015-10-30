@@ -34,7 +34,16 @@ public class Pipe {
     }
     
     public int calculateType()  {
-        case grade
+        switch colours{
+            
+            0: 
+            
+            1:
+                   
+            2:
+            
+            
+        }
         
         
     }
