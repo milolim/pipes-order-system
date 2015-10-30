@@ -16,18 +16,13 @@ public class Pipe {
 
     private int type, gradeMin, gradeMax;
     private boolean bColour1, bColour2, insulation, reinforcement, resistance;
-    private String sColour1, sColour2;
 
     // Constructor
     public Pipe() {
     }
 
         // Modifier methods
-    public Pipe(String piSColour1, String piSColour2) {
-
-        this.sColour1 = piSColour1;
-        this.sColour2 = piSColour2;
-
+    public Pipe() {
         calculateType(); //Write method calculateType()
 
     }
