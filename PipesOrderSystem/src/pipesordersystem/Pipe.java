@@ -14,16 +14,29 @@ public class Pipe {
      These variables are used to define what type of pipe is being used.
      */
 
-    private int type, gradeMin, gradeMax;
-    private boolean bColour1, bColour2, insulation, reinforcement, resistance;
+    private int type, grade, colours;
+    private boolean insulation, reinforcement, resistance;
 
     // Constructor
     public Pipe() {
     }
 
         // Modifier methods
-    public Pipe() {
-        calculateType(); //Write method calculateType()
+    public Pipe(int piGrade, int piColours, boolean piInsulation, boolean piReinforcement, boolean piResistance) {
+           grade = piGrade;
+           colours = piColours;
+           insulation = piInsulation;
+           reinforcement = piReinforcement;
+           resistance = piResistance;
+           type = calculateType();
+   
 
+    }
+    
+    public int calculateType()  {
+        case grade
+        
+        
+    }
     }
 }
