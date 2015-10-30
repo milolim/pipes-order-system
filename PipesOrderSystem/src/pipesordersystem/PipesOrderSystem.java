@@ -5,6 +5,7 @@
  */
 package pipesordersystem;
 
+import pipesordersystem.gui.OrderWindow;
 import java.util.Scanner;
 
 /**
@@ -28,7 +29,7 @@ public class PipesOrderSystem {
             
             if (answer.charAt(0) == 'y') {
                 isValid = true;
-                final OrderGUI window = new OrderGUI();
+                final OrderWindow window = new OrderWindow();
                 window.setVisible(true);
             } else if (answer.charAt(0) == 'n') {
                 isValid = true;
