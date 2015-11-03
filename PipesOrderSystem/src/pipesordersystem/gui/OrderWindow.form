@@ -28,7 +28,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="orderFormPanel1" max="32767" attributes="0"/>
+                  <Component id="panelOrderForm" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="lblCompName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -50,7 +50,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="decorativeSeparator" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="orderFormPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="panelOrderForm" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -59,7 +59,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnCart">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="text" type="java.lang.String" value="Cart (0)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCompName">
@@ -73,7 +73,10 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="decorativeSeparator">
     </Component>
-    <Component class="pipesordersystem.gui.OrderFormPanel" name="orderFormPanel1">
+    <Component class="pipesordersystem.gui.OrderFormPanel" name="panelOrderForm">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new pipesordersystem.gui.OrderFormPanel(orderCart)"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

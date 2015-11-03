@@ -1,5 +1,7 @@
 package pipesordersystem.gui;
 
+import pipesordersystem.Cart;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +17,11 @@ public class OrderWindow extends javax.swing.JFrame {
     /**
      * Creates new form OrderWindow
      */
-    public OrderWindow() {
+        
+    private Cart orderCart;
+    
+    public OrderWindow(pipesordersystem.Cart orderCart) {
+        this.orderCart = orderCart;
         initComponents();
     }
 
@@ -31,12 +37,12 @@ public class OrderWindow extends javax.swing.JFrame {
         btnCart = new javax.swing.JButton();
         lblCompName = new javax.swing.JLabel();
         decorativeSeparator = new javax.swing.JSeparator();
-        orderFormPanel1 = new pipesordersystem.gui.OrderFormPanel();
+        panelOrderForm = new pipesordersystem.gui.OrderFormPanel(orderCart);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PipesR'us Order");
 
-        btnCart.setText("jButton1");
+        btnCart.setText("Cart (0)");
 
         lblCompName.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblCompName.setText("PipesR'Us");
@@ -50,7 +56,7 @@ public class OrderWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(orderFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelOrderForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCompName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -67,7 +73,7 @@ public class OrderWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(decorativeSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelOrderForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -104,7 +110,7 @@ public class OrderWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderWindow().setVisible(true);
+                new OrderWindow(null).setVisible(true);
             }
         });
     }
@@ -113,6 +119,6 @@ public class OrderWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnCart;
     private javax.swing.JSeparator decorativeSeparator;
     private javax.swing.JLabel lblCompName;
-    private pipesordersystem.gui.OrderFormPanel orderFormPanel1;
+    private pipesordersystem.gui.OrderFormPanel panelOrderForm;
     // End of variables declaration//GEN-END:variables
 }
