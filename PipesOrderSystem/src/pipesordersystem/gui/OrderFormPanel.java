@@ -24,7 +24,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     /**
      * 06/11/2015
      * Changes:
-     *     - Added validation for pipe length edit box
+     *     - Added validation for edit boxes.
      */
      
     
@@ -275,7 +275,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
- 
+    
     private Boolean lengthValidation(){
         Boolean valLength = true;
         try {
@@ -285,18 +285,57 @@ public class OrderFormPanel extends javax.swing.JPanel {
           }
         }
         catch(NumberFormatException  edtLength) {
-            String valMessage = "This form only accepts Integer values.";
-            JOptionPane.showMessageDialog(new JFrame(), valMessage);
+            valLength = false;
         }
         return valLength;
     }
-   
+     
+    private Boolean diameterValidation(){
+        Boolean valDiameter = true;
+        try {
+          int length = Integer.parseInt(edtDiameter.getText());
+          if ((length < 0) || (length > 6)){
+              valDiameter = false;
+          }
+        }
+        catch(NumberFormatException  edtDiameter) {
+            valDiameter = false;
+        }
+        return valDiameter;
+    }
+    
+    private Boolean radiusValidation(){
+        Boolean valRadius = true;
+        try {
+          int radius = Integer.parseInt(edtRadius.getText());
+          if (radius < 0){
+              valRadius = false;
+          }
+        }
+        catch(NumberFormatException  edtRadius) {
+            valRadius = false;
+        }
+        return valRadius;
+    }
+    
+    private Boolean validation() {
+        Boolean val = false;
+            if(lengthValidation() && diameterValidation() && radiusValidation()){
+                val = true;
+            }
+            else
+            {
+                String valMessage = "This form only accepts Integer values.";
+                JOptionPane.showMessageDialog(new JFrame(), valMessage);
+            }
+        return val;
+    }
+     
     //Temporary
     
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
-        Boolean cont = lengthValidation();
-        if (cont) {
+        if (validation()) {
             int grade = Integer.parseInt(
                         (String) cmboxPlasticGrade.getSelectedItem()
                         );
