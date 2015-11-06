@@ -6,7 +6,6 @@
 package pipesordersystem;
 
 import pipesordersystem.gui.OrderWindow;
-import java.util.Scanner;
 
 /**
  *

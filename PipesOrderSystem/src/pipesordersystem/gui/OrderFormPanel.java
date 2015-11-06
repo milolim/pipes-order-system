@@ -266,6 +266,10 @@ public class OrderFormPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_edtRadiusActionPerformed
 
+    //Validation goes here
+    
+    //Temporary
+    
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
         
