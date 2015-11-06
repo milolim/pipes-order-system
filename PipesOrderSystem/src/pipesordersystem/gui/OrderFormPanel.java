@@ -13,12 +13,20 @@ import pipesordersystem.Pipe;
 /**
  *
  * @author milo
+ * @author nathaniel
+ * 
  */
 public class OrderFormPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form OrderSubmitPanel
      */
+    /**
+     * 06/11/2015
+     * Changes:
+     *     - Added validation for pipe length edit box
+     */
+     
     
     private Cart orderCart;
     
@@ -267,7 +275,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
-  s
+ 
     private Boolean lengthValidation(){
         Boolean valLength = true;
         try {
