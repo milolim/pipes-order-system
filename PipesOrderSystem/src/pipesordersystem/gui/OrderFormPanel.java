@@ -267,17 +267,19 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
-  
+  s
     private Boolean lengthValidation(){
         Boolean valLength = true;
-      //  try {
+        try {
           int length = Integer.parseInt(edtLength.getText());
           if ((length < 0) || (length > 6)){
               valLength = false;
           }
-       // }
-       // catch() {
-       // }
+        }
+        catch(NumberFormatException  edtLength) {
+            String valMessage = "This form only accepts Integer values.";
+            JOptionPane.showMessageDialog(new JFrame(), valMessage);
+        }
         return valLength;
     }
    
