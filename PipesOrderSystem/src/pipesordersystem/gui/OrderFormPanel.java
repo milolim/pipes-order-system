@@ -267,64 +267,79 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
-    
+  
+    private Boolean lengthValidation(){
+        Boolean valLength = true;
+      //  try {
+          int length = Integer.parseInt(edtLength.getText());
+          if ((length < 0) || (length > 6)){
+              valLength = false;
+          }
+       // }
+       // catch() {
+       // }
+        return valLength;
+    }
+   
     //Temporary
     
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
-        
-        int grade = Integer.parseInt(
-                    (String) cmboxPlasticGrade.getSelectedItem()
-                    );
-        
-        int colours;
-        if (rbtnNoColour.isSelected()) {
-            colours = 0;
-        } else if(rbtnOneColour.isSelected()) {
-            colours = 1;
-        } else { colours = 2; }
-        
-        boolean resistance = cboxChemicalResistance.isSelected();
-        boolean insulation = cboxInnerInsulation.isSelected();
-        boolean reinforcement = cboxOuterReinforcement.isSelected();
-        
-        double length = Double.parseDouble(
-                        edtLength.getText()
+        Boolean cont = lengthValidation();
+        if (cont) {
+            int grade = Integer.parseInt(
+                        (String) cmboxPlasticGrade.getSelectedItem()
                         );
-        
-        double radius;
-        if (rbtnDiameter.isSelected()) {
-            radius = Double.parseDouble(
-                     edtDiameter.getText()
-                     ) / (double)2; //Might cause innacuracies
-        } else {
-            radius = Double.parseDouble(
-                     edtRadius.getText()
-                     );
-        }
-        
-        Pipe newPipe = new Pipe(grade, colours, insulation, reinforcement,
-                                resistance, length, radius);
-        
-        if (newPipe.isValid()) {
-            
-            orderCart.addPipe(newPipe);
-            
-            double itemPrice = newPipe.getPrice();
-            double totalPrice = orderCart.getPrice();
-            int numPipes = orderCart.getSize();
-        
-            String confirmationMessage = "Pipe added to basket. \n"
-                                       + "Price: £" + itemPrice + "\n"
-                                       + "Total price: £" + totalPrice
-                                       + " from " + numPipes + " items.";
-                    
-            JOptionPane.showMessageDialog(new JFrame(), confirmationMessage);
-            
-        } else {
-            String errorMessage = "Error: We cannot supply such pipe. \n"
-                                + "Reason: " + newPipe.getReasonNotValid();
-            JOptionPane.showMessageDialog(new JFrame(), errorMessage);
+
+            int colours;
+            if (rbtnNoColour.isSelected()) {
+                colours = 0;
+            } else if(rbtnOneColour.isSelected()) {
+                colours = 1;
+            } else { colours = 2; }
+
+            boolean resistance = cboxChemicalResistance.isSelected();
+            boolean insulation = cboxInnerInsulation.isSelected();
+            boolean reinforcement = cboxOuterReinforcement.isSelected();
+
+            double length = Double.parseDouble(
+                            edtLength.getText()
+                            );
+
+            double radius;
+            if (rbtnDiameter.isSelected()) {
+                radius = Double.parseDouble(
+                         edtDiameter.getText()
+                         ) / (double)2; //Might cause innacuracies
+            } else {
+                radius = Double.parseDouble(
+                         edtRadius.getText()
+                         );
+            }
+
+            Pipe newPipe = new Pipe(grade, colours, insulation, reinforcement,
+                                    resistance, length, radius);
+
+            if (newPipe.isValid()) {
+
+                orderCart.addPipe(newPipe);
+
+                double itemPrice = newPipe.getPrice();
+                double totalPrice = orderCart.getPrice();
+                int numPipes = orderCart.getSize();
+
+                String confirmationMessage = "Pipe added to basket. \n"
+                                           + "Price: £" + itemPrice + "\n"
+                                           + "Total price: £" + totalPrice
+                                           + " from " + numPipes + " items.";
+
+                JOptionPane.showMessageDialog(new JFrame(), confirmationMessage);
+
+            } else {
+                String errorMessage = "Error: We cannot supply such pipe. \n"
+                                    + "Reason: " + newPipe.getReasonNotValid();
+                JOptionPane.showMessageDialog(new JFrame(), errorMessage);
+            }
         }
         
     }//GEN-LAST:event_btnSubmitOrderActionPerformed
