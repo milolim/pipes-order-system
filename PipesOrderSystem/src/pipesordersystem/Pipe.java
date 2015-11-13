@@ -43,9 +43,7 @@ public class Pipe {
           
             isValidPipe = calculateValidity();
            
-            if (!isValidPipe) {
-                reasonNotValid = calculateReasonNotValid();
-            } else {
+            if (isValidPipe) {
                 double volume = calculatePlasticVolume();
                 price = calculatePrice(volume);
             }
@@ -87,15 +85,26 @@ public class Pipe {
         
         int insulationAsInt = (insulation) ? 1 : 0;
         int reinforcementAsInt = (reinforcement) ? 1 : 0;
-        int pipeId = Integer.parseInt(
-                     "" + grade + colours + insulationAsInt + reinforcementAsInt
-                     );
+        
+        String pipeId = "" + grade + colours + insulationAsInt 
+                      + reinforcementAsInt;
                 
-        int validTypes[] = {1000, 2000, 3000,               //Type I
-                            2100, 3100, 4100,               //Type II
-                            2200, 3200, 4200, 5200,         //Type III
-                            2210, 3210, 4210, 5210,         //Type IV
-                            3211, 4211, 5211};              //Type V
+        String validTypes[] = {"1000", "2000", "3000",              //Type I
+                               "2100", "3100", "4100",              //Type II
+                               "2200", "3200", "4200", "5200",      //Type III
+                               "2210", "3210", "4210", "5210",      //Type IV
+                               "3211", "4211", "5211"};             //Type V
+        
+        /*
+            1. Grade 1 and any colour/insulation/reinforcement is disallowed.
+            2. Grade 2 and reinforcement is disallowed.
+            3. Grade 4 and 0 colours is disallowed.
+            4. Grade 5 and 0/1 colours is disallowed.
+            5. 0 colours and insulation/reinforcement is diallowed.
+            6. 1 colour and insulation/reinforcement is disallowed.
+        
+            Make a numberline of all possible and mark red-disallowed, green-allowed.
+        */
         
         boolean validPipeType = false;
         
@@ -105,11 +114,66 @@ public class Pipe {
             }
         }
         
+        if (validPipeType) {
+            reasonNotValid = calculateReasonNotValid(pipeId, validTypes);
+        }
+        
         return validPipeType;
     }
     
-    private String calculateReasonNotValid() {
-        return "Fuck you.";
+    private String calculateReasonNotValid(String pipeId, String[] validTypes) {
+        
+        String conflict1 = "Reason unidentified.";
+        String conflict2 = "";
+        String sGrade = "" + grade;
+        
+        switch (grade) {
+            
+            case 1:
+                
+                conflict1 = "Plastic grade \"1\"";
+                
+                if (colours != 0) {
+                    conflict2 = "colours \"" + colours + "\"";
+                } else if (insulation) {
+                    conflict2 = "inner insulation";
+                } else if (reinforcement) {
+                    conflict2 = "outer insulation";
+                }
+                
+                break;
+            
+            case 2:
+                
+                if (reinforcement) {
+                    conflict1 = "Plastic grade \"2\"";
+                    conflict2 = "outer insulation";
+                } else if (colours == 0 || colours == 1) {
+                    
+                    conflict1 = "Plastic grade \"2\", colours \"" 
+                              + colours + "\",";
+                    
+                    if (insulation) {
+                        conflict2 = "inner insulation";
+                    } else if (reinforcement) {
+                        conflict2 = "outer insulation";
+                    }
+                 //UNFINISHED!!   
+                }
+                
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+        
+        String errorMessage = conflict1 + " and " + conflict2 
+                            + " is not a valid combination.";
+        
+        return null;
     }
     
     private double calculatePlasticVolume() {

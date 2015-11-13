@@ -5,6 +5,8 @@
  */
 package pipesordersystem.gui;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import pipesordersystem.Cart;
@@ -335,7 +337,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
-        if (validation()) {
+        //if (validation()) {
             int grade = Integer.parseInt(
                         (String) cmboxPlasticGrade.getSelectedItem()
                         );
@@ -373,10 +375,12 @@ public class OrderFormPanel extends javax.swing.JPanel {
 
                 orderCart.addPipe(newPipe);
 
-                double itemPrice = newPipe.getPrice();
-                double totalPrice = orderCart.getPrice();
+                NumberFormat moneyFormat = new DecimalFormat("0.00");
+                
+                String itemPrice = moneyFormat.format(newPipe.getPrice());
+                String totalPrice = moneyFormat.format(orderCart.getPrice());
                 int numPipes = orderCart.getSize();
-
+                
                 String confirmationMessage = "Pipe added to basket. \n"
                                            + "Price: £" + itemPrice + "\n"
                                            + "Total price: £" + totalPrice
@@ -387,9 +391,10 @@ public class OrderFormPanel extends javax.swing.JPanel {
             } else {
                 String errorMessage = "Error: We cannot supply such pipe. \n"
                                     + "Reason: " + newPipe.getReasonNotValid();
+                
                 JOptionPane.showMessageDialog(new JFrame(), errorMessage);
             }
-        }
+        //}
         
     }//GEN-LAST:event_btnSubmitOrderActionPerformed
 
