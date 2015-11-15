@@ -271,6 +271,15 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
+    private boolean isNumeric(String strInput) {
+        try {
+            double strCheck = Double.parseDouble(strInput);
+        } catch (NumberFormatException edtInput) {
+            return false;
+        }
+        return true;
+    }
+
     private Boolean lengthValidation() {
         Boolean valLength = true;
         try {
@@ -311,65 +320,109 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }
 
     private String setMessage() {
-        String message1 = "", message2 = "";
-        Boolean errorType1 = false, errorType2 = false;
-        int error1 = 0, error2 = 0;
-        if (edtLength.getText().equals("")) {
-            if (errorType1 == false) {
-                errorType1 = true;
-                message1 = message1 + "\n The form is incomplete: ";
-            }
-            error1 += 1;
-            message1 += "Length";
-        } else {
-            if (errorType2 == false) {
-                errorType2 = true;
-                message2 = message2 + "\n This form does not accept string values: ";
+        String message1 = "", message2 = "", message3 = "";
+        Boolean errorType1 = false, errorType2 = false, errorType3 = false;
+        int error1 = 0, error2 = 0, error3 = 0;
+        if (!(isNumeric(edtLength.getText()))) {
+            if (edtLength.getText().equals("")) {
+                if (errorType1 == false) {
+                    errorType1 = true;
+                    message1 += "\n The form is incomplete: ";
+                } else {
+                    message1 += ", ";
+                }
+                error1 += 1;
+                message1 += "Length";
             } else {
-                message2 = message2 + ", ";
+                if (errorType2 == false) {
+                    errorType2 = true;
+                    message2 += "\n This form does not accept string values: ";
+                } else {
+                    message2 += ", ";
+                }
+                error2 += 1;
+                message2 += "Length";
             }
-            error2 += 1;
-            message2 += "Length";
+        } else {
+            int iLength = Integer.parseInt(edtLength.getText());
+            if ((iLength < 0) || (iLength > 6)) {
+                if (errorType3 == false) {
+                    errorType3 = true;
+                    message3 += "\n Value out of bounds: ";
+                } else {
+                    message3 += ", ";
+                }
+                error3 += 1;
+                message3 += "Length";
+            }
         }
         if (rbtnDiameter.isSelected()) {
-            if (edtDiameter.getText().equals("")) {
-                if (errorType1 == false) {
-                    errorType1 = true;
-                    message1 = message1 + "\n The form is incomplete: ";
+            if (!(isNumeric(edtDiameter.getText()))) {
+                if (edtDiameter.getText().equals("")) {
+                    if (errorType1 == false) {
+                        errorType1 = true;
+                        message1 = message1 + "\n The form is incomplete: ";
+                    } else {
+                        message1 += ",and ";
+                    }
+                    error1 += 1;
+                    message1 += "Diameter";
                 } else {
-                    message1 += ",and ";
+                    if (errorType2 == false) {
+                        errorType2 = true;
+                        message2 = message2 + "\n This form does not accept string values: ";
+                    } else {
+                        message2 += ",and ";
+                    }
+                    error2 += 1;
+                    message2 += "Diameter";
                 }
-                error1 += 1;
-                message1 += "Diameter";
             } else {
-                if (errorType2 == false) {
-                    errorType2 = true;
-                    message2 = message2 + "\n This form does not accept string values: ";
-                } else {
-                    message2 += ",and ";
+                int iDiameter = Integer.parseInt(edtDiameter.getText());
+                if ((iDiameter < 0) || (iDiameter > 6)) {
+                    if (errorType3 == false) {
+                        errorType3 = true;
+                        message3 += "\n Value out of bounds: ";
+                    } else {
+                        message3 += ", ";
+                    }
+                    error3 += 1;
+                    message3 += "Diameter";
                 }
-                error2 += 1;
-                message2 += "Diameter";
             }
         } else if (rbtnRadius.isSelected()) {
-            if (edtRadius.getText().equals("")) {
-                if (errorType1 == false) {
-                    errorType1 = true;
-                    message1 = message1 + "\n The form is incomplete: ";
+            if (!(isNumeric(edtRadius.getText()))) {
+                if (edtRadius.getText().equals("")) {
+                    if (errorType1 == false) {
+                        errorType1 = true;
+                        message1 = message1 + "\n The form is incomplete: ";
+                    } else {
+                        message1 += ",and ";
+                    }
+                    error1 += 1;
+                    message1 += "Radius";
                 } else {
-                    message1 += ",and ";
+                    if (errorType2 == false) {
+                        errorType2 = true;
+                        message2 = message2 + "\n This form does not accept string values: ";
+                    } else {
+                        message2 += ",and ";
+                    }
+                    error2 += 1;
+                    message2 += "Radius";
                 }
-                error1 += 1;
-                message1 += "Radius";
             } else {
-                if (errorType2 == false) {
-                    errorType2 = true;
-                    message2 = message2 + "\n This form does not accept string values: ";
-                } else {
-                    message2 += ",and ";
+                int iRadius = Integer.parseInt(edtRadius.getText());
+                if ((iRadius < 0) || (iRadius > 6)) {
+                    if (errorType3 == false) {
+                        errorType3 = true;
+                        message3 += "\n Value out of bounds: ";
+                    } else {
+                        message3 += ", ";
+                    }
+                    error3 += 1;
+                    message3 += "Radius";
                 }
-                error2 += 1;
-                message2 += "Radius";
             }
         }
         if (errorType1) {
@@ -386,8 +439,15 @@ public class OrderFormPanel extends javax.swing.JPanel {
                 message2 += " has";
             }
             message2 += " been completed with incorrect data.";
+        } else if (errorType3) {
+            if (error3 > 1) {
+                message3 += " contain numbers";
+            } else {
+                message3 += " contains a number";
+            }
+            message3 += " that is out of bounds.";
         }
-        String message = ("Error:" + message1 + message2);
+        String message = ("Error:" + message1 + message2 + message3);
         return message;
     }
 
