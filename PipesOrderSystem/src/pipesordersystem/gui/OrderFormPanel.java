@@ -14,7 +14,7 @@ import pipesordersystem.Pipe;
  *
  * @author milo
  * @author nathaniel
- * 
+ *
  */
 public class OrderFormPanel extends javax.swing.JPanel {
 
@@ -22,14 +22,10 @@ public class OrderFormPanel extends javax.swing.JPanel {
      * Creates new form OrderSubmitPanel
      */
     /**
-     * 06/11/2015
-     * Changes:
-     *     - Added validation for edit boxes.
+     * 06/11/2015 Changes: - Added validation for edit boxes.
      */
-     
-    
     private Cart orderCart;
-    
+
     public OrderFormPanel(pipesordersystem.Cart orderCart) {
         this.orderCart = orderCart;
         initComponents();
@@ -275,99 +271,245 @@ public class OrderFormPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_edtRadiusActionPerformed
 
     //Validation goes here
-    
-    private Boolean lengthValidation(){
+    private boolean isNumeric(String strInput) {
+        try {
+            double strCheck = Double.parseDouble(strInput);
+        } catch (NumberFormatException edtInput) {
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean lengthValidation() {
         Boolean valLength = true;
         try {
-          int length = Integer.parseInt(edtLength.getText());
-          if ((length < 0) || (length > 6)){
-              valLength = false;
-          }
-        }
-        catch(NumberFormatException  edtLength) {
+            double dLength = Double.parseDouble(edtLength.getText());
+            if ((dLength < 0) || (dLength > 6)) {
+                valLength = false;
+            }
+        } catch (NumberFormatException edtLength) {
             valLength = false;
         }
         return valLength;
     }
-     
-    private Boolean diameterValidation(){
+
+    private Boolean diameterValidation() {
         Boolean valDiameter = true;
         try {
-          int length = Integer.parseInt(edtDiameter.getText());
-          if ((length < 0) || (length > 6)){
-              valDiameter = false;
-          }
-        }
-        catch(NumberFormatException  edtDiameter) {
+            double dDiameter = Double.parseDouble(edtDiameter.getText());
+            if ((dDiameter < 0) || (dDiameter > 10)) {
+                valDiameter = false;
+            }
+        } catch (NumberFormatException edtDiameter) {
             valDiameter = false;
         }
         return valDiameter;
     }
-    
-    private Boolean radiusValidation(){
+
+    private Boolean radiusValidation() {
         Boolean valRadius = true;
         try {
-          int radius = Integer.parseInt(edtRadius.getText());
-          if (radius < 0){
-              valRadius = false;
-          }
-        }
-        catch(NumberFormatException  edtRadius) {
+            Double dRadius = Double.parseDouble(edtRadius.getText());
+            if ((dRadius < 0) || (dRadius > 10)) {
+                valRadius = false;
+            }
+        } catch (NumberFormatException edtRadius) {
             valRadius = false;
         }
         return valRadius;
     }
-    
-    private Boolean validation() {
-        Boolean val = false;
-            if(lengthValidation() && diameterValidation() && radiusValidation()){
-                val = true;
+
+    private String setMessage() {
+        String message1 = "", message2 = "", message3 = "";
+        Boolean errorType1 = false, errorType2 = false, errorType3 = false;
+        int error1 = 0, error2 = 0, error3 = 0;
+        if (!(isNumeric(edtLength.getText()))) {
+            if (edtLength.getText().equals("")) {
+                if (errorType1 == false) {
+                    errorType1 = true;
+                    message1 += "\n The form is incomplete: ";
+                } else {
+                    message1 += ", ";
+                }
+                error1 += 1;
+                message1 += "Length";
+            } else {
+                if (errorType2 == false) {
+                    errorType2 = true;
+                    message2 += "\n This form does not accept string values: ";
+                } else {
+                    message2 += ", ";
+                }
+                error2 += 1;
+                message2 += "Length";
             }
-            else
-            {
-                String valMessage = "This form only accepts Integer values.";
-                JOptionPane.showMessageDialog(new JFrame(), valMessage);
+        } else {
+            int iLength = Integer.parseInt(edtLength.getText());
+            if ((iLength < 0) || (iLength > 6)) {
+                if (errorType3 == false) {
+                    errorType3 = true;
+                    message3 += "\n Value out of bounds: ";
+                } else {
+                    message3 += ", ";
+                }
+                error3 += 1;
+                message3 += "Length";
             }
-        return val;
+        }
+        if (rbtnDiameter.isSelected()) {
+            if (!(isNumeric(edtDiameter.getText()))) {
+                if (edtDiameter.getText().equals("")) {
+                    if (errorType1 == false) {
+                        errorType1 = true;
+                        message1 = message1 + "\n The form is incomplete: ";
+                    } else {
+                        message1 += ",and ";
+                    }
+                    error1 += 1;
+                    message1 += "Diameter";
+                } else {
+                    if (errorType2 == false) {
+                        errorType2 = true;
+                        message2 = message2 + "\n This form does not accept string values: ";
+                    } else {
+                        message2 += ",and ";
+                    }
+                    error2 += 1;
+                    message2 += "Diameter";
+                }
+            } else {
+                int iDiameter = Integer.parseInt(edtDiameter.getText());
+                if ((iDiameter < 0) || (iDiameter > 6)) {
+                    if (errorType3 == false) {
+                        errorType3 = true;
+                        message3 += "\n Value out of bounds: ";
+                    } else {
+                        message3 += ", ";
+                    }
+                    error3 += 1;
+                    message3 += "Diameter";
+                }
+            }
+        } else if (rbtnRadius.isSelected()) {
+            if (!(isNumeric(edtRadius.getText()))) {
+                if (edtRadius.getText().equals("")) {
+                    if (errorType1 == false) {
+                        errorType1 = true;
+                        message1 = message1 + "\n The form is incomplete: ";
+                    } else {
+                        message1 += ",and ";
+                    }
+                    error1 += 1;
+                    message1 += "Radius";
+                } else {
+                    if (errorType2 == false) {
+                        errorType2 = true;
+                        message2 = message2 + "\n This form does not accept string values: ";
+                    } else {
+                        message2 += ",and ";
+                    }
+                    error2 += 1;
+                    message2 += "Radius";
+                }
+            } else {
+                int iRadius = Integer.parseInt(edtRadius.getText());
+                if ((iRadius < 0) || (iRadius > 6)) {
+                    if (errorType3 == false) {
+                        errorType3 = true;
+                        message3 += "\n Value out of bounds: ";
+                    } else {
+                        message3 += ", ";
+                    }
+                    error3 += 1;
+                    message3 += "Radius";
+                }
+            }
+        }
+        if (errorType1) {
+            if (error1 > 1) {
+                message1 += " have";
+            } else {
+                message1 += " has";
+            }
+            message1 += " been left empty.";
+        } else if (errorType2) {
+            if (error2 > 1) {
+                message2 += " have";
+            } else {
+                message2 += " has";
+            }
+            message2 += " been completed with incorrect data.";
+        } else if (errorType3) {
+            if (error3 > 1) {
+                message3 += " contain numbers";
+            } else {
+                message3 += " contains a number";
+            }
+            message3 += " that is out of bounds.";
+        }
+        String message = ("Error:" + message1 + message2 + message3);
+        return message;
     }
-     
+
+    private Boolean validation() {
+        Boolean val1 = false, val2 = false;
+        if (rbtnDiameter.isSelected()) {
+            if (diameterValidation()) {
+                val1 = true;
+            }
+        } else if (rbtnRadius.isSelected()) {
+            if (radiusValidation()) {
+                val1 = true;
+            }
+        }
+        if (lengthValidation() && val1) {
+            val2 = true;
+        } else {
+            String valMessage = setMessage();
+            JOptionPane.showMessageDialog(new JFrame(), valMessage);
+        }
+        return val2;
+    }
+
     //Temporary
-    
+
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
         if (validation()) {
             int grade = Integer.parseInt(
-                        (String) cmboxPlasticGrade.getSelectedItem()
-                        );
+                    (String) cmboxPlasticGrade.getSelectedItem()
+            );
 
             int colours;
             if (rbtnNoColour.isSelected()) {
                 colours = 0;
-            } else if(rbtnOneColour.isSelected()) {
+            } else if (rbtnOneColour.isSelected()) {
                 colours = 1;
-            } else { colours = 2; }
+            } else {
+                colours = 2;
+            }
 
             boolean resistance = cboxChemicalResistance.isSelected();
             boolean insulation = cboxInnerInsulation.isSelected();
             boolean reinforcement = cboxOuterReinforcement.isSelected();
 
             double length = Double.parseDouble(
-                            edtLength.getText()
-                            );
+                    edtLength.getText()
+            );
 
             double radius;
             if (rbtnDiameter.isSelected()) {
                 radius = Double.parseDouble(
-                         edtDiameter.getText()
-                         ) / (double)2; //Might cause innacuracies
+                        edtDiameter.getText()
+                ) / (double) 2; //Might cause innacuracies
             } else {
                 radius = Double.parseDouble(
-                         edtRadius.getText()
-                         );
+                        edtRadius.getText()
+                );
             }
 
             Pipe newPipe = new Pipe(grade, colours, insulation, reinforcement,
-                                    resistance, length, radius);
+                    resistance, length, radius);
 
             if (newPipe.isValid()) {
 
@@ -378,19 +520,19 @@ public class OrderFormPanel extends javax.swing.JPanel {
                 int numPipes = orderCart.getSize();
 
                 String confirmationMessage = "Pipe added to basket. \n"
-                                           + "Price: £" + itemPrice + "\n"
-                                           + "Total price: £" + totalPrice
-                                           + " from " + numPipes + " items.";
+                        + "Price: £" + itemPrice + "\n"
+                        + "Total price: £" + totalPrice
+                        + " from " + numPipes + " items.";
 
                 JOptionPane.showMessageDialog(new JFrame(), confirmationMessage);
 
             } else {
                 String errorMessage = "Error: We cannot supply such pipe. \n"
-                                    + "Reason: " + newPipe.getReasonNotValid();
+                        + "Reason: " + newPipe.getReasonNotValid();
                 JOptionPane.showMessageDialog(new JFrame(), errorMessage);
             }
         }
-        
+
     }//GEN-LAST:event_btnSubmitOrderActionPerformed
 
 
