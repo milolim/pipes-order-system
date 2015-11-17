@@ -13,18 +13,6 @@ package pipesordersystem;
  */
 public class Pipe {
     
-    /*
-    
-    31/10/2015
-    Changes:
-    
-        - Removed empty Pipe constructor, I can see it ever being used.
-        - Set calculateType() to private.
-        - Finished calculateType() method.
-        - Added the needed getters and setters.
-    
-    */
-    
     private int grade, colours;
     private boolean insulation, reinforcement, resistance, isValidPipe;
     private double length, radius, price;   //Length and radius are in inches
@@ -43,9 +31,7 @@ public class Pipe {
           
             isValidPipe = calculateValidity();
            
-            if (!isValidPipe) {
-                reasonNotValid = calculateReasonNotValid();
-            } else {
+            if (isValidPipe) {
                 double volume = calculatePlasticVolume();
                 price = calculatePrice(volume);
             }
@@ -87,15 +73,29 @@ public class Pipe {
         
         int insulationAsInt = (insulation) ? 1 : 0;
         int reinforcementAsInt = (reinforcement) ? 1 : 0;
+        
         int pipeId = Integer.parseInt(
-                     "" + grade + colours + insulationAsInt + reinforcementAsInt
-                     );
+                     "" + grade + colours 
+                        + insulationAsInt 
+                        + reinforcementAsInt
+                        );
                 
-        int validTypes[] = {1000, 2000, 3000,               //Type I
-                            2100, 3100, 4100,               //Type II
-                            2200, 3200, 4200, 5200,         //Type III
-                            2210, 3210, 4210, 5210,         //Type IV
-                            3211, 4211, 5211};              //Type V
+        int validTypes[] = {1000, 2000, 3000,              //Type I
+                            2100, 3100, 4100,              //Type II
+                            2200, 3200, 4200, 5200,        //Type III
+                            2210, 3210, 4210, 5210,        //Type IV
+                            3211, 4211, 5211};             //Type V
+        
+        /*
+            1. Grade 1 and any colour/insulation/reinforcement is disallowed.
+            2. Grade 2 and reinforcement is disallowed.
+            3. Grade 4 and 0 colours is disallowed.
+            4. Grade 5 and 0/1 colours is disallowed.
+            5. 0 colours and insulation/reinforcement is diallowed.
+            6. 1 colour and insulation/reinforcement is disallowed.
+        
+            Make a numberline of all possible and mark red-disallowed, green-allowed.
+        */
         
         boolean validPipeType = false;
         
@@ -105,11 +105,61 @@ public class Pipe {
             }
         }
         
+        if (!validPipeType) {
+            reasonNotValid = calculateReasonNotValid(pipeId);
+        }
+        
         return validPipeType;
     }
     
-    private String calculateReasonNotValid() {
-        return "Fuck you.";
+    private String calculateReasonNotValid(int pipeId) {
+        
+        String errorMessage;
+        
+        if (1000<pipeId && pipeId<2000) {
+            
+            errorMessage = "Plastic grade 1 cannot be combined with any colour, insulation, or reinforcement.";
+            
+        } else if (4000<=pipeId && pipeId<=4011) {
+            
+            errorMessage = "Plastic grade 4 cannot be combined with no colour.";
+            
+        } else if (5000<=pipeId && pipeId<=5111) {
+            
+            errorMessage = "Plastic grade 5 can only be combined with 2 colours.";
+            
+        } else switch (pipeId) {
+            case 2001: case 2011:
+            case 2101: case 2111:
+            case 2201: case 2211:
+                
+                errorMessage = "Plastic grade cannot be combined with reinforcement.";
+                break;
+                
+            case 2010: case 3001:
+            case 3010: case 3011:
+            case 2110: case 3101: 
+            case 3110: case 3111: 
+            case 4101: case 4110: 
+            case 4111:
+                
+                errorMessage = "Insulation and reinforcement can only be applied to pipes with 2 colours.";
+                break;
+                
+            case 3201: case 4201: 
+            case 5201:
+                
+                errorMessage = "A pipe cannot have reinforcement if insulation is not present.";
+                break;
+                
+            default:
+                
+                errorMessage = "Unknown.";
+                break;
+                
+        }
+        
+        return errorMessage;
     }
     
     private double calculatePlasticVolume() {
