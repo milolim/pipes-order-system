@@ -381,12 +381,12 @@ public class OrderFormPanel extends javax.swing.JPanel {
                 String totalPrice = moneyFormat.format(orderCart.getPrice());
                 int numPipes = orderCart.getSize();
                 
-                String confirmationMessage = "Pipe added to basket. \n"
+                String confirmMessage = "Pipe added to basket. \n"
                                            + "Price: £" + itemPrice + "\n"
                                            + "Total price: £" + totalPrice
                                            + " from " + numPipes + " items.";
 
-                JOptionPane.showMessageDialog(new JFrame(), confirmationMessage);
+                JOptionPane.showMessageDialog(new JFrame(), confirmMessage);
 
             } else {
                 String errorMessage = "Error: We cannot supply such pipe. \n"

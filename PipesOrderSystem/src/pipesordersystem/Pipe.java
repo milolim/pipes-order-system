@@ -13,18 +13,6 @@ package pipesordersystem;
  */
 public class Pipe {
     
-    /*
-    
-    31/10/2015
-    Changes:
-    
-        - Removed empty Pipe constructor, I can see it ever being used.
-        - Set calculateType() to private.
-        - Finished calculateType() method.
-        - Added the needed getters and setters.
-    
-    */
-    
     private int grade, colours;
     private boolean insulation, reinforcement, resistance, isValidPipe;
     private double length, radius, price;   //Length and radius are in inches
@@ -86,14 +74,17 @@ public class Pipe {
         int insulationAsInt = (insulation) ? 1 : 0;
         int reinforcementAsInt = (reinforcement) ? 1 : 0;
         
-        String pipeId = "" + grade + colours + insulationAsInt 
-                      + reinforcementAsInt;
+        int pipeId = Integer.parseInt(
+                     "" + grade + colours 
+                        + insulationAsInt 
+                        + reinforcementAsInt
+                        );
                 
-        String validTypes[] = {"1000", "2000", "3000",              //Type I
-                               "2100", "3100", "4100",              //Type II
-                               "2200", "3200", "4200", "5200",      //Type III
-                               "2210", "3210", "4210", "5210",      //Type IV
-                               "3211", "4211", "5211"};             //Type V
+        int validTypes[] = {1000, 2000, 3000,              //Type I
+                            2100, 3100, 4100,              //Type II
+                            2200, 3200, 4200, 5200,        //Type III
+                            2210, 3210, 4210, 5210,        //Type IV
+                            3211, 4211, 5211};             //Type V
         
         /*
             1. Grade 1 and any colour/insulation/reinforcement is disallowed.
@@ -114,66 +105,61 @@ public class Pipe {
             }
         }
         
-        if (validPipeType) {
-            reasonNotValid = calculateReasonNotValid(pipeId, validTypes);
+        if (!validPipeType) {
+            reasonNotValid = calculateReasonNotValid(pipeId);
         }
         
         return validPipeType;
     }
     
-    private String calculateReasonNotValid(String pipeId, String[] validTypes) {
+    private String calculateReasonNotValid(int pipeId) {
         
-        String conflict1 = "Reason unidentified.";
-        String conflict2 = "";
-        String sGrade = "" + grade;
+        String errorMessage;
         
-        switch (grade) {
+        if (1000<pipeId && pipeId<2000) {
             
-            case 1:
-                
-                conflict1 = "Plastic grade \"1\"";
-                
-                if (colours != 0) {
-                    conflict2 = "colours \"" + colours + "\"";
-                } else if (insulation) {
-                    conflict2 = "inner insulation";
-                } else if (reinforcement) {
-                    conflict2 = "outer insulation";
-                }
-                
-                break;
+            errorMessage = "Plastic grade 1 cannot be combined with any colour, insulation, or reinforcement.";
             
-            case 2:
+        } else if (4000<=pipeId && pipeId<=4011) {
+            
+            errorMessage = "Plastic grade 4 cannot be combined with no colour.";
+            
+        } else if (5000<=pipeId && pipeId<=5111) {
+            
+            errorMessage = "Plastic grade 5 can only be combined with 2 colours.";
+            
+        } else switch (pipeId) {
+            case 2001: case 2011:
+            case 2101: case 2111:
+            case 2201: case 2211:
                 
-                if (reinforcement) {
-                    conflict1 = "Plastic grade \"2\"";
-                    conflict2 = "outer insulation";
-                } else if (colours == 0 || colours == 1) {
-                    
-                    conflict1 = "Plastic grade \"2\", colours \"" 
-                              + colours + "\",";
-                    
-                    if (insulation) {
-                        conflict2 = "inner insulation";
-                    } else if (reinforcement) {
-                        conflict2 = "outer insulation";
-                    }
-                 //UNFINISHED!!   
-                }
+                errorMessage = "Plastic grade cannot be combined with reinforcement.";
+                break;
                 
+            case 2010: case 3001:
+            case 3010: case 3011:
+            case 2110: case 3101: 
+            case 3110: case 3111: 
+            case 4101: case 4110: 
+            case 4111:
+                
+                errorMessage = "Insulation and reinforcement can only be applied to pipes with 2 colours.";
                 break;
-            case 3:
+                
+            case 3201: case 4201: 
+            case 5201:
+                
+                errorMessage = "A pipe cannot have reinforcement if insulation is not present.";
                 break;
-            case 4:
+                
+            default:
+                
+                errorMessage = "Unknown.";
                 break;
-            case 5:
-                break;
+                
         }
         
-        String errorMessage = conflict1 + " and " + conflict2 
-                            + " is not a valid combination.";
-        
-        return null;
+        return errorMessage;
     }
     
     private double calculatePlasticVolume() {
