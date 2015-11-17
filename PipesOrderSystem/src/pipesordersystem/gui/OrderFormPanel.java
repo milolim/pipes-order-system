@@ -33,6 +33,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     private Cart orderCart;
     
     public OrderFormPanel(pipesordersystem.Cart orderCart) {
+    //Validation goes here{
         this.orderCart = orderCart;
         initComponents();
     }
@@ -337,7 +338,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
     
     private void btnSubmitOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitOrderActionPerformed
         // TODO add your handling code here:
-        //if (validation()) {
+        if (validation()) {
             int grade = Integer.parseInt(
                         (String) cmboxPlasticGrade.getSelectedItem()
                         );
@@ -350,6 +351,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
             } else { colours = 2; }
 
             boolean resistance = cboxChemicalResistance.isSelected();
+    //Validation goes here
             boolean insulation = cboxInnerInsulation.isSelected();
             boolean reinforcement = cboxOuterReinforcement.isSelected();
 
@@ -394,7 +396,7 @@ public class OrderFormPanel extends javax.swing.JPanel {
                 
                 JOptionPane.showMessageDialog(new JFrame(), errorMessage);
             }
-        //}
+        }
         
     }//GEN-LAST:event_btnSubmitOrderActionPerformed
 
